@@ -136,15 +136,15 @@ export default function (form) {
     },
     'remote': {
       validate (field, params) {
-        axios.post(params.url, {[field]: form[field]})
+        axios[params.requestType](params.url, {[field]: form[field]})
           .then((response) => {
-            if (response.data !== 'true') {
+            if (response.data !== params.successMessage) {
               form.errors[field] = params.message
                 ? params.message
                 : response.data
             }
           })
-      }
+      },
     }
   }
 }

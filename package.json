@@ -1,0 +1,14 @@
+{
+  "name": "mt-form",
+  "version": "0.0.1",
+  "description": "MT Form",
+  "main": "src/Form.js",
+  "keywords": [
+    "forms"
+  ],
+  "author": "Miguel Teixeira <marauder.fx@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "moment": "^2.19.1"
+  }
+}

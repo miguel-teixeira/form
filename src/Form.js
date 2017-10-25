@@ -57,19 +57,7 @@ export default class {
     fields.forEach(field => { this.validate(field) })
   }
 
-  submit (url) {
-      return axios[post](url, this.data())
-        .then((response) => {
-          resolve(response)
-        }).catch((error) => {
-          if (error.response.status === 422) {
-            Object.keys(error.response.data).forEach((key) => {
-              this.errors[key] = error.response.data[key][0]
-            })
-          }
-
-          reject(error)
-        })
-    })
+  submit (requestType, url) {
+    return axios[requestType](url, this.data())
   }
 }

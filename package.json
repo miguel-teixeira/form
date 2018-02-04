@@ -1,10 +1,10 @@
 {
-  "name": "mt-form",
+  "name": "vue-form",
   "version": "0.0.1",
   "description": "MT Form",
   "main": "src/Form.js",
   "keywords": [
-    "forms"
+    "vue", "form"
   ],
   "author": "Miguel Teixeira <marauder.fx@gmail.com>",
   "license": "MIT",

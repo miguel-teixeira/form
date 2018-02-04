@@ -1,39 +1,43 @@
 export default class {
-  constructor (fields) {
-    this.fields = fields
+    constructor (fields) {
+        this.fields = fields;
 
-    fields.forEach(field => { this[field] = '' })
-  }
-
-  has (field) {
-    return this[field]
-  }
-
-  get (field) {
-    return this[field]
-  }
-
-  set (field, error) {
-    this[field] = error
-  }
-
-  unset (field) {
-    this[field] = ''
-  }
-
-  some (fields) {
-    for (let field in fields) {
-      if (this[fields[field]] !== '') {
-        return true
-      }
+        fields.forEach(field => { this[field] = '' });
     }
 
-    return false
-  }
-
-  clear () {
-    for (let field in this.fields) {
-      this[this.fields[field]] = ''
+    has (field) {
+        return this[field];
     }
-  }
+
+    get (field) {
+        return this[field];
+    }
+
+    set (field, error) {
+        this[field] = error;
+    }
+
+    unset (field) {
+        this[field] = '';
+    }
+
+    some (fields) {
+        for (let field in fields) {
+            if (this[fields[field]] !== '') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    empty() {
+        return this.some(Object.keys(this.fields));
+    }
+
+    clear() {
+        for (let field in this.fields) {
+            this[this.fields[field]] = '';
+        }
+    }
 }

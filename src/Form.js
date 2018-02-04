@@ -1,63 +1,84 @@
 import Errors from './Errors'
 import validations from './validations'
+import axios from 'axios';
 
 export default class {
-  constructor (data, rules, extraValidations = {}) {
-    this.defaultData = {}
+    constructor (data, rules, extraValidations = {}) {
+        this.defaultData = {};
 
-    if (data) {
-      Object.assign(this.defaultData, data)
+        if (data) {
+            Object.assign(this.defaultData, data);
 
-      Object.keys(data).forEach(key => { this[key] = data[key] })
+            Object.keys(data).forEach(key => { this[key] = data[key] });
+        }
+
+        this.errors = new Errors(Object.keys(this.defaultData));
+
+        this.validations = validations(this);
+
+        if (extraValidations) {
+            Object.assign(this.validations, extraValidations);
+        }
+
+        this.rules = rules || {};
     }
 
-    this.errors = new Errors(Object.keys(this.defaultData))
-
-    this.validations = validations(this)
-
-    if (extraValidations) {
-      Object.assign(this.validations, extraValidations)
+    validateSome(fields) {
+        fields.forEach(field => { this.validateField(field) });
     }
 
-    this.rules = rules || {}
-  }
-
-  reset () {
-    Object.keys(this.defaultData).forEach(key => { this[key] = this.defaultData[key] })
-  }
-
-  validate (field) {
-    if (!this.rules[field]) {
-      return
+    validate() {
+        this.validateSome(Object.keys(this.defaultData));
     }
 
-    this.errors[field] = ''
+    validateField(field) {
+        if (!this.rules[field]) {
+            return
+        }
 
-    for (let index in this.rules[field]) {
-      let rule = this.rules[field][index]
-      let validation = Object.keys(rule)[0]
+        this.errors[field] = '';
 
-      this.validations[validation].validate(field, rule[validation])
+        for (let index in this.rules[field]) {
+            let rule = this.rules[field][index];
+            let validation = Object.keys(rule)[0];
 
-      if (this.errors.has(field)) {
-        break
-      }
+            this.validations[validation].validate(field, rule[validation]);
+
+            if (this.errors.has(field)) {
+                break;
+            }
+        }
     }
-  }
 
-  data () {
-    let data = {}
+    reset() {
+        Object.keys(this.defaultData).forEach(key => { this[key] = this.defaultData[key] });
+    }
 
-    Object.keys(this.defaultData).forEach(key => { data[key] = this[key] })
+    hasErrors() {
+        return this.errors.empty()
+    }
 
-    return data
-  }
+    data() {
+        let data = {};
 
-  validateSome (fields) {
-    fields.forEach(field => { this.validate(field) })
-  }
+        Object.keys(this.defaultData).forEach(key => { data[key] = this[key] });
 
-  submit (requestType, url) {
-    return axios[requestType](url, this.data())
-  }
+        return data;
+    }
+
+    submit(requestType, url) {
+        return axios[requestType](url, this.data());
+    }
+
+    observeSome(formName, fields, context) {
+        fields.forEach(name => {
+            context.$watch(`${formName}.${name}`, () => {
+                this.validateField(name);
+            });
+        })
+    };
+
+    observe(formName, context) {
+        this.observeSome(formName, Object.keys(this.defaultData), context);
+    }
 }

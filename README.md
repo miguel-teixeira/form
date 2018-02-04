@@ -1,3 +1,3 @@
-# mt-forms
+# vue-form
 
-This is a handy form class with validation to use with vue.
+This is a handy form class to use with vue.

@@ -4,11 +4,12 @@
   "description": "MT Form",
   "main": "src/Form.js",
   "keywords": [
-    "vue", "form"
+    "vue",
+    "form"
   ],
   "author": "Miguel Teixeira <marauder.fx@gmail.com>",
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "axios": "^0.17.0",
     "moment": "^2.19.1"
   }

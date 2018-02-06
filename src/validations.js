@@ -119,7 +119,7 @@ export default function (form) {
                 }
             },
             testPassword (password) {
-                return /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,20}$/.test(password);
+                return /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{6,20}$/.test(password);
             }
         },
         equalTo: {

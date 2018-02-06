@@ -55,7 +55,7 @@ export default class {
     }
 
     hasErrors() {
-        return this.errors.empty()
+        return !this.errors.empty();
     }
 
     data() {

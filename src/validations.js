@@ -11,6 +11,24 @@ export default function (form) {
                 }
             }
         },
+        min: {
+            validate (field, params) {
+                if ((form[field]*1) < params.min) {
+                    form.errors[field] = params.message
+                        ? params.message
+                        : `Minimum value is ${params.min}.`;
+                }
+            }
+        },
+        max: {
+            validate (field, params) {
+                if ((form[field]*1) > params.max) {
+                    form.errors[field] = params.message
+                        ? params.message
+                        : `Maximum value is ${params.max}.`;
+                }
+            }
+        },
         email: {
             validate (field, params) {
                 if (!this.testEmail(form[field])) {
@@ -61,6 +79,18 @@ export default function (form) {
                 }
             }
         },
+        decimal: {
+            validate (field, params) {
+                if (!this.testDecimal(form[field])) {
+                    form.errors[field] = params.message
+                        ? params.message
+                        : `Only allowed unsigned decimal numbers.`;
+                }
+            },
+            testDecimal (value) {
+                return /^\d*\.?\d*$/.test(value);
+            }
+        },
         digits: {
             validate (field, params) {
                 if (!this.testDigits(form[field])) {
@@ -72,7 +102,6 @@ export default function (form) {
             testDigits (value) {
                 return /^\d+$/.test(value);
             }
-
         },
         zipCode: {
             validate (field, params) {

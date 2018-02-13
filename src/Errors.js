@@ -31,8 +31,8 @@ export default class {
         return false;
     }
 
-    empty() {
-        return this.some(Object.keys(this.fields));
+    hasErrors() {
+        return this.some(this.fields);
     }
 
     clear() {

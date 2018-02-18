@@ -174,6 +174,10 @@ export default function (form) {
                                 ? params.message
                                 : response.data
                         }
+                    }).catch(error => {
+                        form.errors[field] = params.message
+                            ? params.message
+                            : error.response.data
                     });
             },
         }
